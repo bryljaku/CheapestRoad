@@ -1,0 +1,15 @@
+import collections
+import heapq
+
+class PriorityQueue:
+    def __init__(self):
+        self.vals = []
+
+    def empty(self) -> bool:
+        return len(self.vals) == 0
+
+    def put(self, item, priority):
+        heapq.heappush(self.vals, (priority, item))
+
+    def get(self):
+        return heapq.heappop(self.vals)[1]

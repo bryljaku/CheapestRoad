@@ -1,7 +1,7 @@
 from Graph import *
 import argparse
 import itertools
-
+from Dijkstra import Dijkstra
 dist_multiplier = 1.0
 
 parser = argparse.ArgumentParser(description='PizzaDelivery path finder')
@@ -9,13 +9,8 @@ parser.add_argument("-input", action="store", required=True, type=str, help="Pat
 
 args = parser.parse_args()
 file_path = args.input
-graph = load_graph_from_file(file_path)
+graph = load_graph_from_file(file_path, dist_multiplier)
 
-
-fullPath = []
-pathCost = 0
-print("\n" + "Full path: ")
-print(list(map(lambda x: x.nodeId, fullPath)))
-
-for i in range(0, len(fullPath) - 1):
-    pathCost += graph.getCost(fullPath[i], fullPath[i+1])
+nodeBId = len(graph.nodes) - 1
+path, cost, tickets = Dijkstra.search(graph, 0, nodeBId)
+print(f"Full path: {path}\ncost: {cost}\ntickets: {tickets}")
