@@ -1,0 +1,14 @@
+0 0 10
+1 50 1
+2 50 2
+3 0 3
+#
+0 1 10
+0 2 10
+0 3 100
+1 3 20
+2 3 10
+eof
+
+Node - <id, ticket_cost, group>
+Edge - <Node, Node, Length> or <NodeId, NodeId, length>

@@ -11,7 +11,7 @@ class Node:
         self.id = id
         self.ticket_price = ticket_price
         self.group = group
-        self.neighbors: DefaultDict[(int, Neighbor)] = {}
+        self.neighbors = {}
 
     def __lt__(self, other):
         return self.id < other.id
@@ -65,8 +65,8 @@ class Graph:
             ticket_cost = nodeB.ticket_price
         return self.nodes[nodeA.id].neighbors[nodeB.id].travel_cost + ticket_cost
 
-    def getNeighbors(self, node: Node) -> DefaultDict[(int, Neighbor)]:
-        return self.nodes[node.id].neighbors
+    def getNeighbors(self, node) -> DefaultDict[(int, Neighbor)]:
+        return self.nodes[node].neighbors
 
 def load_graph_from_file(path, dist_multiplier):
     file = open(path, 'r')
@@ -79,7 +79,7 @@ def load_graph_from_file(path, dist_multiplier):
             break
         dict = l.split(' ')
         id = int(dict[0])
-        ticket_price = float(dict[1])
+        ticket_price = int(dict[1])
         group = dict[2]
         graph.addNode(Node(id, ticket_price, group))
 
