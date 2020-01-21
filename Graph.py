@@ -61,11 +61,11 @@ class Graph:
 
     def getCost(self, nodeA, nodeB, tickets):
         ticket_cost = 0
-        if self.nodes[nodeB.id].group not in tickets:
+        if nodeB.group not in tickets or nodeB.group == 0: #group 0 == no group
             ticket_cost = nodeB.ticket_price
-        return self.nodes[nodeA.id].neighbors[nodeB.id].travel_cost + ticket_cost
+        return nodeA.neighbors[nodeB.id].travel_cost + ticket_cost
 
-    def getNeighbors(self, node) -> DefaultDict[(int, Neighbor)]:
+    def getNeighbors(self, node):
         return self.nodes[node].neighbors
 
 def load_graph_from_file(path, dist_multiplier):
@@ -80,7 +80,7 @@ def load_graph_from_file(path, dist_multiplier):
         dict = l.split(' ')
         id = int(dict[0])
         ticket_price = int(dict[1])
-        group = dict[2]
+        group = int(dict[2])
         graph.addNode(Node(id, ticket_price, group))
 
     #add edges
