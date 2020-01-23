@@ -68,7 +68,9 @@ class Graph:
     def getNeighbors(self, node):
         return self.nodes[node].neighbors
 
-def load_graph_from_file(path, dist_multiplier):
+
+
+def load_graph_from_file(path, hour_cost):
     file = open(path, 'r')
 
     graph = Graph()
@@ -91,8 +93,9 @@ def load_graph_from_file(path, dist_multiplier):
         dict = l.split(' ')
         id1 = int(dict[0])
         id2 = int(dict[1])
-        travel_cost = float(dict[2])*dist_multiplier
-        e = Edge(id1, id2, travel_cost)
+        hours_cost = int(dict[2])*hour_cost
+        ticket_price = int(dict[3])
+        e = Edge(id1, id2, hours_cost + ticket_price)
         graph.addEdge(e)
     file.close()    
     return graph

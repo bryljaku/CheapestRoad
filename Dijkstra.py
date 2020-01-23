@@ -22,12 +22,10 @@ def dijkstra(graph: Graph, s, g, starter_tickets=[], start_cost=0, previous_path
             break
 
         if current.id in reversable_nodes:
-            if came_from[current.id] is not None and current.group not in tickets_earned[came_from[current.id]]:
-                print("g1")
+            if came_from[current.id] is not None and current.group not in tickets_earned[came_from[current.id]] and current.group != 0:
                 reverse_states.append((reconstruct_path(came_from, s, current.id), cost_so_far[current.id], tickets_earned[current.id]))
-            elif came_from[current.id] is None and not is_recurrency_dijkstra:
-                print("g2")
-                reverse_states.append([current.id], cost_so_far[current.id], tickets_earned[current.id])
+            elif came_from[current.id] is None and not is_recurrency_dijkstra and current.group != 0:
+                reverse_states.append(([current.id], cost_so_far[current.id], tickets_earned[current.id]))
 
         for i in graph.getNeighbors(current.id).values():
             next_node = graph.getNodeById(i.id)
@@ -44,7 +42,6 @@ def dijkstra(graph: Graph, s, g, starter_tickets=[], start_cost=0, previous_path
 
 
     best_path = previous_path + reconstruct_path(came_from, start.id, goal.id)
-    print(previous_path)
     best_cost = cost_so_far[goal.id]
     best_tickets = tickets_earned[goal.id]
 
@@ -60,14 +57,14 @@ def dijkstra(graph: Graph, s, g, starter_tickets=[], start_cost=0, previous_path
     return best_path, best_cost, best_tickets
 
 
-def clean_path(path):
+def clean_path(path): #worst case O(V)
     cleaned_path = []
     for n in path:
         if len(cleaned_path) == 0 or cleaned_path[-1] != n:
             cleaned_path.append(n)
     return cleaned_path
 
-def reconstruct_path(came_from, start, goal):
+def reconstruct_path(came_from, start, goal): # O(V)
     current = goal
     path = [current]
     while current != start:
@@ -76,24 +73,18 @@ def reconstruct_path(came_from, start, goal):
     path.reverse()
     return path
 
-
-
-
-
-
-
-def get_reversable_nodes(graph: Graph):
-    mean_edge_price = sum(e.travel_cost for e in graph.edges) / len(graph.edges)
+def get_reversable_nodes(graph: Graph): # O(V^2 + E)
+    mean_edge_price = sum(e.travel_cost for e in graph.edges) / len(graph.edges) # O(E)
     max_ticket_prices_from_groups = get_max_ticket_prices(graph)
-    reversable_groups = get_reverse_groups(graph)
+    reversable_groups = get_reverse_groups(graph) #O(V * V) ~ O(V*groups)
     reversable_nodes = []
-    for node in graph.nodes.values():
+    for node in graph.nodes.values(): # O(V)
         if node.group in reversable_groups and node.ticket_price + mean_edge_price*2 < max_ticket_prices_from_groups[node.group]:
             reversable_nodes.append(node.id)
     return reversable_nodes
 
 
-def get_max_ticket_prices(graph):
+def get_max_ticket_prices(graph): # O(V)
     max_ticket_prices = {}
     for node in graph.nodes.values():
         if node.group not in max_ticket_prices:
@@ -102,7 +93,7 @@ def get_max_ticket_prices(graph):
     return max_ticket_prices
 
 
-def get_reverse_groups(graph):
+def get_reverse_groups(graph): # O(V*groups) = worst case O(V^2)
     group_count = {}
     for n in graph.nodes.values():
         if n.group not in group_count:
@@ -115,10 +106,11 @@ def get_reverse_groups(graph):
     return groups_to_reverse
 
 
-def check_if_big_difference(graph, group):
+def check_if_big_difference(graph, group): # O(V)
     ticket_prices = []
     for node_id in graph.nodes:
         node = graph.getNodeById(node_id)
         if node.group == group:
             ticket_prices.append(node.ticket_price)
-    return max(ticket_prices) > min(ticket_prices)+30 #lets hardcode it that its worth to return
+
+    return max(ticket_prices) > min(ticket_prices)+ (sum(ticket_prices)/len(ticket_prices)) #lets hardcode it that its worth to return
