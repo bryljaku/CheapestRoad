@@ -110,4 +110,5 @@ Złożoność obliczeniowa była testowana na grafach utworzonych przy użyciu g
 
 
 ## Wyniki projektu
-
+![alt tag](https://github.com/jbryl7/CheapestRoad/blob/master/regular_dijkstra_equal_groups.png)
+![alt tag](https://github.com/jbryl7/CheapestRoad/blob/master/modified_dijkstra.png)
