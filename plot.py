@@ -38,7 +38,7 @@ res = np.transpose(res)
 np.savetxt("tabelka.csv", res, delimiter=";", fmt="%f")
 
 fig = plt.figure()
-plt.scatter(complexity, y, color="black")
+plt.scatter(num_reversable_nodes, y, color="black")
 #plt.plot(complexity, y_pred, color="red", linewidth=3.0)
 plt.xlabel('Predicted complexity: (E + V*log(V))^V')
 plt.ylabel('Time')

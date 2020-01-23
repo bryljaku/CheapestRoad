@@ -111,4 +111,13 @@ Złożoność obliczeniowa była testowana na grafach utworzonych przy użyciu g
 
 ## Wyniki projektu
 ![alt tag](https://github.com/jbryl7/CheapestRoad/blob/master/regular_dijkstra_equal_groups.png)
+
+Dla przypadku prostszym w którym wszystkie miasta w danej grupie miały identyczny koszt złożoność wynikająca z wykresu mniej więcej pokrywa się ze złożonością przewidywaną. Odchyły są spowodowane losowością generatora.
+
+
+
+
+
 ![alt tag](https://github.com/jbryl7/CheapestRoad/blob/master/modified_dijkstra.png)
+
+w przypadku trudniejszym można zauważyć że jest kilka wartości które znacząco odbiegają od reszty wyników. Jest to spowodowane losowością generatora i wynikającą z tego liczbą miast "zawracalnych" oraz ich położenia w grafie.
