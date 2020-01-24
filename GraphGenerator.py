@@ -30,5 +30,8 @@ class GraphGenerator(object):
             graph.createAndAddEdge(node_a, node_b, ticket_price + hours_cost)
             connected.append(i)
         
-
+        for edge in graph.edges:
+            print(f'{edge.nodeA}-{edge.nodeB}-{edge.travel_cost}')
+        for node in graph.nodes.values():
+            print(f'{node.id}-{node.ticket_price}-{node.group}')
         return graph
